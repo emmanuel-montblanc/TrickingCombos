@@ -1,0 +1,58 @@
+@use "@angular/material" as mat;
+
+html {
+    @include mat.theme(
+        (
+            color: (
+                primary: mat.$azure-palette,
+                theme-type: light
+            )
+        )
+    )
+}
+
+.dark {
+    @include mat.theme(
+        (
+            color: (
+                primary: mat.$cyan-palette,
+                theme-type: dark
+            )
+        )
+    );
+}
+
+
+.warn {
+    @include mat.theme(
+        (
+            color: mat.$red-palette
+        )
+    )
+}
+
+.success {
+    @include mat.theme(
+        (
+            color: mat.$green-palette
+        )
+    )
+}
+
+mat-toolbar {
+    @include mat.toolbar-overrides(
+        (
+            container-background-color: var(--mat-sys-inverse-primary),
+            container-text-color: var(--mat-sys-on-inverse-primary)
+        )
+    );
+}
+
+.content {
+    padding: 2rem;
+    min-height: 100vh;
+    background-color: var(--mat-sys-background);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

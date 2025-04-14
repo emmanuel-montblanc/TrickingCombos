@@ -1,0 +1,11 @@
+<mat-toolbar>
+    Tricking Combos Beta
+    <mat-slide-toggle
+        [checked]="themeService.selectedTheme()?.name === 'light'"
+        (change)="toggleTheme()"
+    >
+        <button mat-icon-button (click)="toggleTheme()">
+            <mat-icon>{{ themeService.selectedTheme()?.icon }}</mat-icon>
+        </button>
+    </mat-slide-toggle>
+  </mat-toolbar>
