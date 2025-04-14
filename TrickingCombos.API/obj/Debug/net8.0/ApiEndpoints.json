@@ -1,0 +1,44 @@
+[
+  {
+    "ContainingType": "TrickingCombos.API.Controllers.StancesController",
+    "Method": "GetAllStances",
+    "RelativePath": "api/Stances",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TrickingCombos.API.Controllers.StancesController",
+    "Method": "AddStance",
+    "RelativePath": "api/Stances",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TrickingCombos.API.Controllers.StancesController",
+    "Method": "DeleteStance",
+    "RelativePath": "api/Stances/{stanceName}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stanceName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

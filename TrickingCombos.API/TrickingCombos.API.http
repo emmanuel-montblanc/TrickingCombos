@@ -1,0 +1,6 @@
+@TrickingCombos.API_HostAddress = http://localhost:5172
+
+GET {{TrickingCombos.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
