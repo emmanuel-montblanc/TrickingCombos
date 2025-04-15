@@ -12,6 +12,7 @@ export class ApiserviceService {
 
   constructor(private httpClient: HttpClient) { }
 
+  // Stances
   getAllStances(): Observable<any> {
     const headers = new HttpHeaders().set('content-type', 'application/json');
     return this.httpClient.get(this.path + 'stances', { headers });
@@ -31,6 +32,7 @@ export class ApiserviceService {
     return this.httpClient.delete(`${this.path}stances/${encodeURIComponent(id)}`);
   }
 
+  // Transitions
   getAllTransitions(): Observable<any> {
     const headers = new HttpHeaders().set('content-type', 'application/json');
     return this.httpClient.get(this.path + 'transitions', { headers });
@@ -50,5 +52,27 @@ export class ApiserviceService {
 
   deleteTransition(id: string) {
     return this.httpClient.delete(`${this.path}transitions/${encodeURIComponent(id)}`);
+  }
+
+  // Variations
+  getAllVariations(): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this.httpClient.get(this.path + 'variations', { headers });
+  }
+
+  addVariation(name: string, landingstanceId: string) {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    const body = { name, landingstanceId };
+    return this.httpClient.post(this.path + 'variations', body, { headers });
+  }
+
+  editVariation(id: string, name: string, landingStanceId: string) {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    const body = { name, landingStanceId };
+    return this.httpClient.put(`${this.path}variations/${encodeURIComponent(id)}`, body, { headers });
+  }
+
+  deleteVariation(id: string) {
+    return this.httpClient.delete(`${this.path}variations/${encodeURIComponent(id)}`);
   }
 }

@@ -92,7 +92,6 @@ export class TransitionPageComponent {
   }
 
   editTransition(id: string, name: string, stanceIds: string[]) {
-    console.debug('editing transition');
     this.service.editTransition(id, name, stanceIds).subscribe({
       next: () => {
         this.getAllTransitions();
