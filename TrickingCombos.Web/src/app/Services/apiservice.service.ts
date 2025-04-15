@@ -21,8 +21,13 @@ export class ApiserviceService {
     return this.httpClient.post(this.path + 'stances', JSON.stringify(name), { headers });
   }
 
-  edditStance(originalName: string, newName: string) {
+  edditStance(stanceId: string, newName: string) {
+    console.log(newName);
     const headers = new HttpHeaders().set('content-type', 'application/json');
-    return this.httpClient.put(`${this.path}stances/${encodeURIComponent(originalName)}`,  JSON.stringify(newName), { headers });
+    return this.httpClient.put(`${this.path}stances/${encodeURIComponent(stanceId)}`, JSON.stringify(newName), { headers });
+  }
+
+  deleteStance(stanceId: string) {
+    return this.httpClient.delete(`${this.path}stances/${encodeURIComponent(stanceId)}`);
   }
 }

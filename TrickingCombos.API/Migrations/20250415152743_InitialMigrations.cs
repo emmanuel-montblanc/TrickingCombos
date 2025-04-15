@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace TrickingCombos.API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,50 +15,54 @@ namespace TrickingCombos.API.Migrations
                 name: "Stances",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stances", x => x.Name);
+                    table.PrimaryKey("PK_Stances", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Transitions",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transitions", x => x.Name);
+                    table.PrimaryKey("PK_Transitions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Variations",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Variations", x => x.Name);
+                    table.PrimaryKey("PK_Variations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tricks",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    DefaultLandingStanceName = table.Column<string>(type: "TEXT", nullable: false)
+                    DefaultLandingStanceId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tricks", x => x.Name);
+                    table.PrimaryKey("PK_Tricks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tricks_Stances_DefaultLandingStanceName",
-                        column: x => x.DefaultLandingStanceName,
+                        name: "FK_Tricks_Stances_DefaultLandingStanceId",
+                        column: x => x.DefaultLandingStanceId,
                         principalTable: "Stances",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -65,23 +70,23 @@ namespace TrickingCombos.API.Migrations
                 name: "StanceTransition",
                 columns: table => new
                 {
-                    StancesName = table.Column<string>(type: "TEXT", nullable: false),
-                    TransitionsName = table.Column<string>(type: "TEXT", nullable: false)
+                    StancesId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    TransitionsId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StanceTransition", x => new { x.StancesName, x.TransitionsName });
+                    table.PrimaryKey("PK_StanceTransition", x => new { x.StancesId, x.TransitionsId });
                     table.ForeignKey(
-                        name: "FK_StanceTransition_Stances_StancesName",
-                        column: x => x.StancesName,
+                        name: "FK_StanceTransition_Stances_StancesId",
+                        column: x => x.StancesId,
                         principalTable: "Stances",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StanceTransition_Transitions_TransitionsName",
-                        column: x => x.TransitionsName,
+                        name: "FK_StanceTransition_Transitions_TransitionsId",
+                        column: x => x.TransitionsId,
                         principalTable: "Transitions",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -89,23 +94,23 @@ namespace TrickingCombos.API.Migrations
                 name: "TransitionStances",
                 columns: table => new
                 {
-                    TransitionName = table.Column<string>(type: "TEXT", nullable: false),
-                    StanceName = table.Column<string>(type: "TEXT", nullable: false)
+                    TransitionId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StanceId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TransitionStances", x => new { x.TransitionName, x.StanceName });
+                    table.PrimaryKey("PK_TransitionStances", x => new { x.TransitionId, x.StanceId });
                     table.ForeignKey(
-                        name: "FK_TransitionStances_Stances_StanceName",
-                        column: x => x.StanceName,
+                        name: "FK_TransitionStances_Stances_StanceId",
+                        column: x => x.StanceId,
                         principalTable: "Stances",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TransitionStances_Transitions_TransitionName",
-                        column: x => x.TransitionName,
+                        name: "FK_TransitionStances_Transitions_TransitionId",
+                        column: x => x.TransitionId,
                         principalTable: "Transitions",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -113,23 +118,23 @@ namespace TrickingCombos.API.Migrations
                 name: "StanceVariation",
                 columns: table => new
                 {
-                    StancesName = table.Column<string>(type: "TEXT", nullable: false),
-                    VariationsName = table.Column<string>(type: "TEXT", nullable: false)
+                    StancesId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    VariationsId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StanceVariation", x => new { x.StancesName, x.VariationsName });
+                    table.PrimaryKey("PK_StanceVariation", x => new { x.StancesId, x.VariationsId });
                     table.ForeignKey(
-                        name: "FK_StanceVariation_Stances_StancesName",
-                        column: x => x.StancesName,
+                        name: "FK_StanceVariation_Stances_StancesId",
+                        column: x => x.StancesId,
                         principalTable: "Stances",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StanceVariation_Variations_VariationsName",
-                        column: x => x.VariationsName,
+                        name: "FK_StanceVariation_Variations_VariationsId",
+                        column: x => x.VariationsId,
                         principalTable: "Variations",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -137,23 +142,23 @@ namespace TrickingCombos.API.Migrations
                 name: "VariationStances",
                 columns: table => new
                 {
-                    VariationName = table.Column<string>(type: "TEXT", nullable: false),
-                    StanceName = table.Column<string>(type: "TEXT", nullable: false)
+                    VariationId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StanceId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VariationStances", x => new { x.VariationName, x.StanceName });
+                    table.PrimaryKey("PK_VariationStances", x => new { x.VariationId, x.StanceId });
                     table.ForeignKey(
-                        name: "FK_VariationStances_Stances_StanceName",
-                        column: x => x.StanceName,
+                        name: "FK_VariationStances_Stances_StanceId",
+                        column: x => x.StanceId,
                         principalTable: "Stances",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VariationStances_Variations_VariationName",
-                        column: x => x.VariationName,
+                        name: "FK_VariationStances_Variations_VariationId",
+                        column: x => x.VariationId,
                         principalTable: "Variations",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -161,23 +166,23 @@ namespace TrickingCombos.API.Migrations
                 name: "TransitionTrick",
                 columns: table => new
                 {
-                    TransitionsName = table.Column<string>(type: "TEXT", nullable: false),
-                    TricksName = table.Column<string>(type: "TEXT", nullable: false)
+                    TransitionsId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    TricksId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TransitionTrick", x => new { x.TransitionsName, x.TricksName });
+                    table.PrimaryKey("PK_TransitionTrick", x => new { x.TransitionsId, x.TricksId });
                     table.ForeignKey(
-                        name: "FK_TransitionTrick_Transitions_TransitionsName",
-                        column: x => x.TransitionsName,
+                        name: "FK_TransitionTrick_Transitions_TransitionsId",
+                        column: x => x.TransitionsId,
                         principalTable: "Transitions",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TransitionTrick_Tricks_TricksName",
-                        column: x => x.TricksName,
+                        name: "FK_TransitionTrick_Tricks_TricksId",
+                        column: x => x.TricksId,
                         principalTable: "Tricks",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -185,23 +190,23 @@ namespace TrickingCombos.API.Migrations
                 name: "TrickTransitions",
                 columns: table => new
                 {
-                    TrickName = table.Column<string>(type: "TEXT", nullable: false),
-                    TransitionName = table.Column<string>(type: "TEXT", nullable: false)
+                    TrickId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    TransitionId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TrickTransitions", x => new { x.TrickName, x.TransitionName });
+                    table.PrimaryKey("PK_TrickTransitions", x => new { x.TrickId, x.TransitionId });
                     table.ForeignKey(
-                        name: "FK_TrickTransitions_Transitions_TransitionName",
-                        column: x => x.TransitionName,
+                        name: "FK_TrickTransitions_Transitions_TransitionId",
+                        column: x => x.TransitionId,
                         principalTable: "Transitions",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TrickTransitions_Tricks_TrickName",
-                        column: x => x.TrickName,
+                        name: "FK_TrickTransitions_Tricks_TrickId",
+                        column: x => x.TrickId,
                         principalTable: "Tricks",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -209,23 +214,23 @@ namespace TrickingCombos.API.Migrations
                 name: "TrickVariation",
                 columns: table => new
                 {
-                    TricksName = table.Column<string>(type: "TEXT", nullable: false),
-                    VariationsName = table.Column<string>(type: "TEXT", nullable: false)
+                    TricksId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    VariationsId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TrickVariation", x => new { x.TricksName, x.VariationsName });
+                    table.PrimaryKey("PK_TrickVariation", x => new { x.TricksId, x.VariationsId });
                     table.ForeignKey(
-                        name: "FK_TrickVariation_Tricks_TricksName",
-                        column: x => x.TricksName,
+                        name: "FK_TrickVariation_Tricks_TricksId",
+                        column: x => x.TricksId,
                         principalTable: "Tricks",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TrickVariation_Variations_VariationsName",
-                        column: x => x.VariationsName,
+                        name: "FK_TrickVariation_Variations_VariationsId",
+                        column: x => x.VariationsId,
                         principalTable: "Variations",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -233,70 +238,70 @@ namespace TrickingCombos.API.Migrations
                 name: "TrickVariations",
                 columns: table => new
                 {
-                    TrickName = table.Column<string>(type: "TEXT", nullable: false),
-                    VariationName = table.Column<string>(type: "TEXT", nullable: false)
+                    TrickId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    VariationId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TrickVariations", x => new { x.TrickName, x.VariationName });
+                    table.PrimaryKey("PK_TrickVariations", x => new { x.TrickId, x.VariationId });
                     table.ForeignKey(
-                        name: "FK_TrickVariations_Tricks_TrickName",
-                        column: x => x.TrickName,
+                        name: "FK_TrickVariations_Tricks_TrickId",
+                        column: x => x.TrickId,
                         principalTable: "Tricks",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TrickVariations_Variations_VariationName",
-                        column: x => x.VariationName,
+                        name: "FK_TrickVariations_Variations_VariationId",
+                        column: x => x.VariationId,
                         principalTable: "Variations",
-                        principalColumn: "Name",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_StanceTransition_TransitionsName",
+                name: "IX_StanceTransition_TransitionsId",
                 table: "StanceTransition",
-                column: "TransitionsName");
+                column: "TransitionsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StanceVariation_VariationsName",
+                name: "IX_StanceVariation_VariationsId",
                 table: "StanceVariation",
-                column: "VariationsName");
+                column: "VariationsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TransitionStances_StanceName",
+                name: "IX_TransitionStances_StanceId",
                 table: "TransitionStances",
-                column: "StanceName");
+                column: "StanceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TransitionTrick_TricksName",
+                name: "IX_TransitionTrick_TricksId",
                 table: "TransitionTrick",
-                column: "TricksName");
+                column: "TricksId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tricks_DefaultLandingStanceName",
+                name: "IX_Tricks_DefaultLandingStanceId",
                 table: "Tricks",
-                column: "DefaultLandingStanceName");
+                column: "DefaultLandingStanceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TrickTransitions_TransitionName",
+                name: "IX_TrickTransitions_TransitionId",
                 table: "TrickTransitions",
-                column: "TransitionName");
+                column: "TransitionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TrickVariation_VariationsName",
+                name: "IX_TrickVariation_VariationsId",
                 table: "TrickVariation",
-                column: "VariationsName");
+                column: "VariationsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TrickVariations_VariationName",
+                name: "IX_TrickVariations_VariationId",
                 table: "TrickVariations",
-                column: "VariationName");
+                column: "VariationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VariationStances_StanceName",
+                name: "IX_VariationStances_StanceId",
                 table: "VariationStances",
-                column: "StanceName");
+                column: "StanceId");
         }
 
         /// <inheritdoc />

@@ -1,14 +1,14 @@
-<h2 mat-dialog-title>{{ data ? 'Edit' : 'Add' }} Stance</h2>
+<h2 mat-dialog-title>{{ data ? 'Modification' : 'Ajout' }} d'une stance</h2>
 <mat-dialog-content>
   <form [formGroup]="form">
     <mat-form-field appearance="outline" style="width: 100%; margin-top: 1rem;">
-      <mat-label>Name</mat-label>
+      <mat-label>Nom</mat-label>
       <input matInput formControlName="name" />
     </mat-form-field>
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="cancel()">Cancel</button>
-  <button mat-flat-button (click)="save()">Save</button>
+  <button mat-button (click)="cancel()">Annuler</button>
+  <button mat-flat-button (click)="save()">{{ data ? 'Enregister' : 'Ajouter' }}</button>
 </mat-dialog-actions>

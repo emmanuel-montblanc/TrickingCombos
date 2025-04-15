@@ -156,3 +156,4 @@ C:\Users\saure\source\repos\TrickingCombos\TrickingCombos.API\bin\Debug\net8.0\r
 C:\Users\saure\source\repos\TrickingCombos\TrickingCombos.API\bin\Debug\net8.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\saure\source\repos\TrickingCombos\TrickingCombos.API\bin\Debug\net8.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\saure\source\repos\TrickingCombos\TrickingCombos.API\bin\Debug\net8.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\saure\source\repos\TrickingCombos\TrickingCombos.API\obj\Debug\net8.0\TrickingCombos.API.sourcelink.json

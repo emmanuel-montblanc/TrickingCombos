@@ -23,6 +23,7 @@ public class StancesController(TricksDbContext context) : ControllerBase
     {
         var stance = new Stance()
         {
+            Id = Guid.NewGuid(),
             Name = name
         };
         _context.Stances.Add(stance);
@@ -31,10 +32,25 @@ public class StancesController(TricksDbContext context) : ControllerBase
         return Ok(stance);
     }
 
-    [HttpDelete("{stanceName}")]
-    public IActionResult DeleteStance([FromRoute] string stanceName)
+    [HttpPut("{stanceId}")]
+    public IActionResult EditStance([FromRoute] Guid stanceId, [FromBody] string newName)
     {
-        var stance = _context.Stances.FirstOrDefault(x => x.Name == stanceName);
+        var stance = _context.Stances.FirstOrDefault(x => x.Id == stanceId);
+        if (stance is null)
+        {
+            return NotFound("Could not find a stance with this name");
+        }
+        stance.Name = newName;
+        _context.Stances.Update(stance);
+        _context.SaveChanges();
+
+        return Ok(stance);
+    } 
+
+    [HttpDelete("{StanceId}")]
+    public IActionResult DeleteStance([FromRoute] Guid stanceId)
+    {
+        var stance = _context.Stances.FirstOrDefault(x => x.Id == stanceId);
         if (stance is null)
         {
             return NotFound("Could not find a stance with this name");

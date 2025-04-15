@@ -27,15 +27,36 @@
   },
   {
     "ContainingType": "TrickingCombos.API.Controllers.StancesController",
+    "Method": "EditStance",
+    "RelativePath": "api/Stances/{stanceId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stanceId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "newName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TrickingCombos.API.Controllers.StancesController",
     "Method": "DeleteStance",
-    "RelativePath": "api/Stances/{stanceName}",
+    "RelativePath": "api/Stances/{StanceId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "stanceName",
-        "Type": "System.String",
+        "Name": "stanceId",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],

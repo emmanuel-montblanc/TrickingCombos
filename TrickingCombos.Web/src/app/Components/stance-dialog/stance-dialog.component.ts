@@ -23,7 +23,7 @@ import { Stance } from '../../Models/stance';
   styleUrls: ['./stance-dialog.component.scss']
 })
 export class StanceDialogComponent {
-  originalName: string | null;
+  id: string | null;
   form: FormGroup;
 
   constructor(
@@ -31,7 +31,7 @@ export class StanceDialogComponent {
     public dialogRef: MatDialogRef<StanceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Stance | null
   ) {
-    this.originalName = data?.name || null;
+    this.id = data?.id || null;
     this.form = this.fb.group({
       name: [data?.name || '']
     });
@@ -40,7 +40,7 @@ export class StanceDialogComponent {
   save() {
     const updatedData = {
       name: this.form.value.name,
-      originalName: this.originalName
+      id: this.id
     }
     this.dialogRef.close(updatedData);
   }

@@ -18,17 +18,66 @@ public class TricksDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Configure Many-to-Many Composite Keys
+        // Configure TransitionStanceLink
         modelBuilder.Entity<TransitionStanceLink>()
-            .HasKey(ts => new { ts.TransitionName, ts.StanceName });
+            .HasKey(ts => new { ts.TransitionId, ts.StanceId });
+
+        modelBuilder.Entity<TransitionStanceLink>()
+            .HasOne(ts => ts.Transition)
+            .WithMany(t => t.TransitionStances)
+            .HasForeignKey(ts => ts.TransitionId);
+
+        modelBuilder.Entity<TransitionStanceLink>()
+            .HasOne(ts => ts.Stance)
+            .WithMany(s => s.TransitionStances)
+            .HasForeignKey(ts => ts.StanceId);
+
+        // Configure VariationStanceLink
+        modelBuilder.Entity<VariationStanceLink>()
+            .HasKey(vs => new { vs.VariationId, vs.StanceId });
 
         modelBuilder.Entity<VariationStanceLink>()
-            .HasKey(vs => new { vs.VariationName, vs.StanceName });
+            .HasOne(vs => vs.Variation)
+            .WithMany(v => v.VariationStances)
+            .HasForeignKey(vs => vs.VariationId);
+
+        modelBuilder.Entity<VariationStanceLink>()
+            .HasOne(vs => vs.Stance)
+            .WithMany(s => s.VariationStances)
+            .HasForeignKey(vs => vs.StanceId);
+
+        // Configure TrickTransitionLink
+        modelBuilder.Entity<TrickTransitionLink>()
+            .HasKey(tt => new { tt.TrickId, tt.TransitionId });
 
         modelBuilder.Entity<TrickTransitionLink>()
-            .HasKey(tt => new { tt.TrickName, tt.TransitionName });
+            .HasOne(tt => tt.Trick)
+            .WithMany(t => t.TrickTransitionsLinks)
+            .HasForeignKey(tt => tt.TrickId);
+
+        modelBuilder.Entity<TrickTransitionLink>()
+            .HasOne(tt => tt.Transition)
+            .WithMany(t => t.TrickTransitions)
+            .HasForeignKey(tt => tt.TransitionId);
+
+        // Configure TrickVariationLink
+        modelBuilder.Entity<TrickVariationLink>()
+            .HasKey(tv => new { tv.TrickId, tv.VariationId });
 
         modelBuilder.Entity<TrickVariationLink>()
-            .HasKey(tv => new { tv.TrickName, tv.VariationName });
+            .HasOne(tv => tv.Trick)
+            .WithMany(t => t.TrickVariationsLinks)
+            .HasForeignKey(tv => tv.TrickId);
+
+        modelBuilder.Entity<TrickVariationLink>()
+            .HasOne(tv => tv.Variation)
+            .WithMany(v => v.TrickVariations)
+            .HasForeignKey(tv => tv.VariationId);
+
+        // Configure Trick's DefaultLandingStance relationship
+        modelBuilder.Entity<Trick>()
+            .HasOne(t => t.DefaultLandingStance)
+            .WithMany()
+            .HasForeignKey(t => t.DefaultLandingStanceId);
     }
 }

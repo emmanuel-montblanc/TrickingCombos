@@ -2,9 +2,9 @@
 
 public class TrickVariationLink
 {
-    public required string TrickName { get; set; }
+    public required Guid TrickId { get; set; }
     public required Trick Trick { get; set; }
 
-    public required string VariationName { get; set; }
+    public required Guid VariationId { get; set; }
     public required Variation Variation { get; set; }
 }
