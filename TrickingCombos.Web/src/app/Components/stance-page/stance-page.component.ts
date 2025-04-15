@@ -27,7 +27,7 @@ export class StancePageComponent {
   ) {}
 
   ngOnInit() {
-    this.getAllStances()
+    this.getAllStances();
   }
 
   getAllStances() {
@@ -38,6 +38,7 @@ export class StancePageComponent {
       },
       error: (error: any) => {
         console.error(error);
+        this.snackbar.showError(`Une erreur est survenue lors de la récupération des stances`);
       }
     });
   }
@@ -52,23 +53,31 @@ export class StancePageComponent {
       if (result) {
         console.log(result);
         if (result.id) {
-          this.service.edditStance(result.id, result.name).subscribe({
-            next: () => {
-              this.getAllStances();
-              this.snackbar.showSuccess(`La stance "${result.name}" a bien été modifiée !`);
-            },
-            error: () => this.snackbar.showError(`Une erreur est survenue lors de la modification de la stance "${result.name}"`)
-          });
+          this.editStance(result);
         } else {
-          this.service.addStance(result.name).subscribe({
-            next: () => {
-              this.getAllStances();
-              this.snackbar.showSuccess(`La stance "${result.name}" a bien été ajoutée !`);
-            },
-            error: () => this.snackbar.showError(`Une erreur est survenue lors de l'ajout de la stance "${result.name}"`)
-          });
+          this.addStance(result.name);
         }
       }
+    });
+  }
+
+  editStance(stance: Stance) {
+    this.service.edditStance(stance.id, stance.name).subscribe({
+      next: () => {
+        this.getAllStances();
+        this.snackbar.showSuccess(`La stance "${stance.name}" a bien été modifiée !`);
+      },
+      error: () => this.snackbar.showError(`Une erreur est survenue lors de la modification de la stance "${stance.name}"`)
+    });
+  }
+
+  addStance(name: string) {
+    this.service.addStance(name).subscribe({
+      next: () => {
+        this.getAllStances();
+        this.snackbar.showSuccess(`La stance "${name}" a bien été ajoutée !`);
+      },
+      error: () => this.snackbar.showError(`Une erreur est survenue lors de l'ajout de la stance "${name}"`)
     });
   }
 
