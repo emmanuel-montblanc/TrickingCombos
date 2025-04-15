@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrickingCombos.API.Data;
+using TrickingCombos.API.Extensions;
 using TrickingCombos.API.Models;
 
 namespace TrickingCombos.API.Controllers;
@@ -14,8 +15,10 @@ public class StancesController(TricksDbContext context) : ControllerBase
     [HttpGet]
     public IActionResult GetAllStances()
     {
-        var stances = _context.Stances.ToList();
-        return Ok(stances);
+        var stancesDtos = _context.Stances
+            .Select(s => s.ToDto())
+            .ToList();
+        return Ok(stancesDtos);
     }
 
     [HttpPost]
@@ -29,7 +32,7 @@ public class StancesController(TricksDbContext context) : ControllerBase
         _context.Stances.Add(stance);
         _context.SaveChanges();
 
-        return Ok(stance);
+        return Ok(stance.ToDto());
     }
 
     [HttpPut("{stanceId}")]
@@ -44,7 +47,7 @@ public class StancesController(TricksDbContext context) : ControllerBase
         _context.Stances.Update(stance);
         _context.SaveChanges();
 
-        return Ok(stance);
+        return Ok(stance.ToDto());
     } 
 
     [HttpDelete("{StanceId}")]

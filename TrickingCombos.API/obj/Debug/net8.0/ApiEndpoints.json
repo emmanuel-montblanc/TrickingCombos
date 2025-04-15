@@ -61,5 +61,73 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TrickingCombos.API.Controllers.TransitionsController",
+    "Method": "GetAllTransitions",
+    "RelativePath": "api/Transitions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TrickingCombos.API.Controllers.TransitionsController",
+    "Method": "AddTransition",
+    "RelativePath": "api/Transitions",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "transitionRequest",
+        "Type": "TrickingCombos.API.Models.TransitionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TrickingCombos.API.Controllers.TransitionsController",
+    "Method": "DeleteStance",
+    "RelativePath": "api/Transitions/{StanceId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stanceId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TrickingCombos.API.Controllers.TransitionsController",
+    "Method": "EditTransition",
+    "RelativePath": "api/Transitions/{transitionId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stanceId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "transitionRequest",
+        "Type": "TrickingCombos.API.Models.TransitionRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "transitionId",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

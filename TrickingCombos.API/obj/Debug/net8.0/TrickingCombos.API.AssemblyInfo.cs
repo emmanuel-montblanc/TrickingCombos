@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TrickingCombos.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3db8a871bc61490c279f4060643284f4fe569aed")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec037b48de03b0d29d0ffad234f07c5ead8a94ff")]
 [assembly: System.Reflection.AssemblyProductAttribute("TrickingCombos.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TrickingCombos.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

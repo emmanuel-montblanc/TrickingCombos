@@ -11,6 +11,6 @@ public class Transition
     public List<Trick> Tricks => TrickTransitions.Select(tt => tt.Trick).ToList();
 
     // Database mapping
-    public required List<TransitionStanceLink> TransitionStances { get; set; }
-    public required List<TrickTransitionLink> TrickTransitions { get; set; }
+    public List<TransitionStanceLink> TransitionStances { get; set; } = [];
+    public List<TrickTransitionLink> TrickTransitions { get; set; } = [];
 }
