@@ -7,7 +7,7 @@
     </mat-form-field>
     
     <mat-form-field appearance="outline" style="width: 100%">
-        <mat-label>Stances</mat-label>
+        <mat-label>Faisable depuis</mat-label>
         <mat-select formControlName="stances" multiple>
             <mat-option *ngFor="let stance of stances" [value]="stance.id">
                 {{ stance.name }}

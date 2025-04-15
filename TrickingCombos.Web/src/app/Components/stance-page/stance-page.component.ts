@@ -33,7 +33,6 @@ export class StancePageComponent {
   getAllStances() {
     this.service.getAllStances().subscribe({
       next: (res: any) => {
-        console.log(res);
         this.stances = res
       },
       error: (error: any) => {
@@ -51,7 +50,6 @@ export class StancePageComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         if (result.id) {
           this.editStance(result);
         } else {
@@ -81,26 +79,30 @@ export class StancePageComponent {
     });
   }
 
-  confirmDelete(data: Stance): void {
+  confirmDelete(stance: Stance): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Suppression de stance',
-        message: `Etes vous sûrs de vouloir supprimer la stance "${data.name}" ? Cette suppression est définitive.`
+        message: `Etes vous sûrs de vouloir supprimer la stance "${stance.name}" ? Cette suppression est définitive.`
       },
       autoFocus: false
     });
   
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        this.service.deleteStance(data.id).subscribe({
-          next: () => {
-            this.snackbar.showInfo(`La stance "${data.name}" a bien été supprimée !`);
-            this.getAllStances();
-          },
-          error: () => {
-            this.snackbar.showError(`Une erreur est survenue lors de la suppression de la stance "${data.name}"`);
-          }
-        });
+        this.deleteStance(stance);
+      }
+    });
+  }
+
+  deleteStance(stance: Stance) {
+    this.service.deleteStance(stance.id).subscribe({
+      next: () => {
+        this.snackbar.showInfo(`La stance "${stance.name}" a bien été supprimée !`);
+        this.getAllStances();
+      },
+      error: () => {
+        this.snackbar.showError(`Une erreur est survenue lors de la suppression de la stance "${stance.name}"`);
       }
     });
   }

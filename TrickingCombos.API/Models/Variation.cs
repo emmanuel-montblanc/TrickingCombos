@@ -7,10 +7,8 @@ public class Variation
     [Key]
     public Guid Id { get; set; }
     public required string Name { get; set; }
-    public List<Stance> Stances => VariationStances.Select(vs => vs.Stance).ToList();
-    public List<Trick> Tricks => TrickVariations.Select(tv => tv.Trick).ToList();
+    public required Stance LandingStance { get; set; }
+    public ICollection<Trick> Tricks { get; set; } = [];
 
-    // Database mapping
-    public required List<VariationStanceLink> VariationStances { get; set; }
-    public required List<TrickVariationLink> TrickVariations { get; set; }
+    public required Guid LandingStanceId { get; set; }
 }

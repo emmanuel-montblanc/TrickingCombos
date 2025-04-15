@@ -32,36 +32,6 @@ namespace TrickingCombos.API.Migrations
                     b.ToTable("StanceTransition");
                 });
 
-            modelBuilder.Entity("StanceVariation", b =>
-                {
-                    b.Property<Guid>("StancesId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("VariationsId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("StancesId", "VariationsId");
-
-                    b.HasIndex("VariationsId");
-
-                    b.ToTable("StanceVariation");
-                });
-
-            modelBuilder.Entity("TransitionTrick", b =>
-                {
-                    b.Property<Guid>("TransitionsId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("TricksId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TransitionsId", "TricksId");
-
-                    b.HasIndex("TricksId");
-
-                    b.ToTable("TransitionTrick");
-                });
-
             modelBuilder.Entity("TrickVariation", b =>
                 {
                     b.Property<Guid>("TricksId")
@@ -102,24 +72,14 @@ namespace TrickingCombos.API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("TrickId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("TrickId");
+
                     b.ToTable("Transitions");
-                });
-
-            modelBuilder.Entity("TrickingCombos.API.Models.TransitionStanceLink", b =>
-                {
-                    b.Property<Guid>("TransitionId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("StanceId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TransitionId", "StanceId");
-
-                    b.HasIndex("StanceId");
-
-                    b.ToTable("TransitionStances");
                 });
 
             modelBuilder.Entity("TrickingCombos.API.Models.Trick", b =>
@@ -142,64 +102,29 @@ namespace TrickingCombos.API.Migrations
                     b.ToTable("Tricks");
                 });
 
-            modelBuilder.Entity("TrickingCombos.API.Models.TrickTransitionLink", b =>
-                {
-                    b.Property<Guid>("TrickId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("TransitionId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TrickId", "TransitionId");
-
-                    b.HasIndex("TransitionId");
-
-                    b.ToTable("TrickTransitions");
-                });
-
-            modelBuilder.Entity("TrickingCombos.API.Models.TrickVariationLink", b =>
-                {
-                    b.Property<Guid>("TrickId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("VariationId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TrickId", "VariationId");
-
-                    b.HasIndex("VariationId");
-
-                    b.ToTable("TrickVariations");
-                });
-
             modelBuilder.Entity("TrickingCombos.API.Models.Variation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("LandingStanceId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("StanceId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Variations");
-                });
-
-            modelBuilder.Entity("TrickingCombos.API.Models.VariationStanceLink", b =>
-                {
-                    b.Property<Guid>("VariationId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("StanceId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("VariationId", "StanceId");
+                    b.HasIndex("LandingStanceId");
 
                     b.HasIndex("StanceId");
 
-                    b.ToTable("VariationStances");
+                    b.ToTable("Variations");
                 });
 
             modelBuilder.Entity("StanceTransition", b =>
@@ -213,36 +138,6 @@ namespace TrickingCombos.API.Migrations
                     b.HasOne("TrickingCombos.API.Models.Transition", null)
                         .WithMany()
                         .HasForeignKey("TransitionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("StanceVariation", b =>
-                {
-                    b.HasOne("TrickingCombos.API.Models.Stance", null)
-                        .WithMany()
-                        .HasForeignKey("StancesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrickingCombos.API.Models.Variation", null)
-                        .WithMany()
-                        .HasForeignKey("VariationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TransitionTrick", b =>
-                {
-                    b.HasOne("TrickingCombos.API.Models.Transition", null)
-                        .WithMany()
-                        .HasForeignKey("TransitionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrickingCombos.API.Models.Trick", null)
-                        .WithMany()
-                        .HasForeignKey("TricksId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -262,23 +157,11 @@ namespace TrickingCombos.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TrickingCombos.API.Models.TransitionStanceLink", b =>
+            modelBuilder.Entity("TrickingCombos.API.Models.Transition", b =>
                 {
-                    b.HasOne("TrickingCombos.API.Models.Stance", "Stance")
-                        .WithMany("TransitionStances")
-                        .HasForeignKey("StanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrickingCombos.API.Models.Transition", "Transition")
-                        .WithMany("TransitionStances")
-                        .HasForeignKey("TransitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Stance");
-
-                    b.Navigation("Transition");
+                    b.HasOne("TrickingCombos.API.Models.Trick", null)
+                        .WithMany("Transitions")
+                        .HasForeignKey("TrickId");
                 });
 
             modelBuilder.Entity("TrickingCombos.API.Models.Trick", b =>
@@ -292,89 +175,29 @@ namespace TrickingCombos.API.Migrations
                     b.Navigation("DefaultLandingStance");
                 });
 
-            modelBuilder.Entity("TrickingCombos.API.Models.TrickTransitionLink", b =>
+            modelBuilder.Entity("TrickingCombos.API.Models.Variation", b =>
                 {
-                    b.HasOne("TrickingCombos.API.Models.Transition", "Transition")
-                        .WithMany("TrickTransitions")
-                        .HasForeignKey("TransitionId")
+                    b.HasOne("TrickingCombos.API.Models.Stance", "LandingStance")
+                        .WithMany()
+                        .HasForeignKey("LandingStanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TrickingCombos.API.Models.Trick", "Trick")
-                        .WithMany("TrickTransitionsLinks")
-                        .HasForeignKey("TrickId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("TrickingCombos.API.Models.Stance", null)
+                        .WithMany("Variations")
+                        .HasForeignKey("StanceId");
 
-                    b.Navigation("Transition");
-
-                    b.Navigation("Trick");
-                });
-
-            modelBuilder.Entity("TrickingCombos.API.Models.TrickVariationLink", b =>
-                {
-                    b.HasOne("TrickingCombos.API.Models.Trick", "Trick")
-                        .WithMany("TrickVariationsLinks")
-                        .HasForeignKey("TrickId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrickingCombos.API.Models.Variation", "Variation")
-                        .WithMany("TrickVariations")
-                        .HasForeignKey("VariationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Trick");
-
-                    b.Navigation("Variation");
-                });
-
-            modelBuilder.Entity("TrickingCombos.API.Models.VariationStanceLink", b =>
-                {
-                    b.HasOne("TrickingCombos.API.Models.Stance", "Stance")
-                        .WithMany("VariationStances")
-                        .HasForeignKey("StanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrickingCombos.API.Models.Variation", "Variation")
-                        .WithMany("VariationStances")
-                        .HasForeignKey("VariationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Stance");
-
-                    b.Navigation("Variation");
+                    b.Navigation("LandingStance");
                 });
 
             modelBuilder.Entity("TrickingCombos.API.Models.Stance", b =>
                 {
-                    b.Navigation("TransitionStances");
-
-                    b.Navigation("VariationStances");
-                });
-
-            modelBuilder.Entity("TrickingCombos.API.Models.Transition", b =>
-                {
-                    b.Navigation("TransitionStances");
-
-                    b.Navigation("TrickTransitions");
+                    b.Navigation("Variations");
                 });
 
             modelBuilder.Entity("TrickingCombos.API.Models.Trick", b =>
                 {
-                    b.Navigation("TrickTransitionsLinks");
-
-                    b.Navigation("TrickVariationsLinks");
-                });
-
-            modelBuilder.Entity("TrickingCombos.API.Models.Variation", b =>
-                {
-                    b.Navigation("TrickVariations");
-
-                    b.Navigation("VariationStances");
+                    b.Navigation("Transitions");
                 });
 #pragma warning restore 612, 618
         }

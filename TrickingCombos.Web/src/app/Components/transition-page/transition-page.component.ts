@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Stance } from '../../Models/stance';
 import { TransitionDialogComponent } from '../transition-dialog/transition-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-transition-page',
@@ -34,7 +35,6 @@ export class TransitionPageComponent {
   getAllTransitions() {
     this.service.getAllTransitions().subscribe({
       next: (res: Transition[]) => {
-        console.log(res);
         this.transitions = res;
       },
       error: (error: any) => {
@@ -47,7 +47,6 @@ export class TransitionPageComponent {
   getAllStances() {
     this.service.getAllStances().subscribe({
       next: (res: any) => {
-        console.log(res);
         this.stances = res
       },
       error: (error: any) => {
@@ -74,7 +73,7 @@ export class TransitionPageComponent {
       if (result) {
         console.log(result);
         if (result.id) {
-          // todo
+          this.editTransition(result.id, result.name, result.stancesIds);
         } else {
           this.addTransition(result.name, result.stancesIds);
         }
@@ -89,6 +88,45 @@ export class TransitionPageComponent {
         this.snackbar.showSuccess(`La transition "${name}" a bien été ajoutée !`);
       },
       error: () => this.snackbar.showError(`Une erreur est survenue lors de l'ajout de la transition "${name}"`)
+    });
+  }
+
+  editTransition(id: string, name: string, stanceIds: string[]) {
+    console.debug('editing transition');
+    this.service.editTransition(id, name, stanceIds).subscribe({
+      next: () => {
+        this.getAllTransitions();
+        this.snackbar.showSuccess(`La transition "${name}" a bien été modifiée !`);
+      },
+      error: () => this.snackbar.showError(`Une erreur est survenue lors de la modification de la transition "${name}"`)
+    });
+  }
+
+  confirmDelete(transition: Transition): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Suppression de transition',
+        message: `Etes vous sûrs de vouloir supprimer la transition "${transition.name}" ? Cette suppression est définitive.`
+      },
+      autoFocus: false
+    });
+  
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.deleteTransition(transition)
+      }
+    });
+  }
+
+  deleteTransition(transition: Transition) {
+    this.service.deleteTransition(transition.id).subscribe({
+      next: () => {
+        this.snackbar.showInfo(`La transition "${transition.name}" a bien été supprimée !`);
+        this.getAllTransitions();
+      },
+      error: () => {
+        this.snackbar.showError(`Une erreur est survenue lors de la suppression de la transition "${transition.name}"`);
+      }
     });
   }
 }

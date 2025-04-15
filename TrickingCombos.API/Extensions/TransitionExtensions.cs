@@ -11,8 +11,8 @@ public static class TransitionExtensions
         {
             Id = transition.Id,
             Name = transition.Name,
-            Stances = transition.TransitionStances
-                .Select(ts => ts.Stance.ToDto())
+            Stances = transition.Stances
+                .Select(stance => stance.ToDto())
                 .ToList()
         };
     }

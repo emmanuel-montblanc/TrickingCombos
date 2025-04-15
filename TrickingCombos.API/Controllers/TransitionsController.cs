@@ -17,8 +17,7 @@ public class TransitionsController(TricksDbContext context) : ControllerBase
     public IActionResult GetAllTransitions()
     {
         var stancesDtos = _context.Transitions
-            .Include(t => t.TransitionStances)
-                .ThenInclude(ts => ts.Stance)
+            .Include(t => t.Stances)
             .Select(t => t.ToDto()).ToList();
         return Ok(stancesDtos);
     }
@@ -49,20 +48,8 @@ public class TransitionsController(TricksDbContext context) : ControllerBase
         {
             Id = Guid.NewGuid(),
             Name = transitionRequest.Name,
-            TransitionStances = new List<TransitionStanceLink>()
+            Stances = stances
         };
-
-        foreach (var stance in stances)
-        {
-            var link = new TransitionStanceLink
-            {
-                TransitionId = transition.Id,
-                Transition = transition,
-                StanceId = stance.Id,
-                Stance = stance
-            };
-            transition.TransitionStances.Add(link);
-        }
 
         _context.Transitions.Add(transition);
         _context.SaveChanges();
@@ -71,33 +58,39 @@ public class TransitionsController(TricksDbContext context) : ControllerBase
     }
 
     [HttpPut("{transitionId}")]
-    public IActionResult EditTransition([FromRoute] Guid stanceId, [FromBody] TransitionRequest transitionRequest)
+    public IActionResult EditTransition([FromRoute] Guid transitionId, [FromBody] TransitionRequest transitionRequest)
     {
-        //var stance = _context.Stances.FirstOrDefault(x => x.Id == stanceId);
-        //if (stance is null)
-        //{
-        //    return NotFound("Could not find a stance with this name");
-        //}
-        //stance.Name = newName;
-        //_context.Stances.Update(stance);
-        //_context.SaveChanges();
+        var transition = _context.Transitions
+            .Include(t => t.Stances)
+            .FirstOrDefault(x => x.Id == transitionId);
 
-        //return Ok(stance);
-        throw new NotImplementedException();
+        if (transition is null)
+        {
+            return NotFound("Could not find a stance with this name");
+        }
+
+        transition.Name = transitionRequest.Name;
+        transition.Stances = _context.Stances
+            .Where(s => transitionRequest.StanceIds.Contains(s.Id))
+            .ToList();
+
+        _context.Transitions.Update(transition);
+        _context.SaveChanges();
+
+        return Ok(transition.ToDto());
     }
 
-    [HttpDelete("{StanceId}")]
-    public IActionResult DeleteStance([FromRoute] Guid stanceId)
+    [HttpDelete("{transitionId}")]
+    public IActionResult DeleteStance([FromRoute] Guid transitionId)
     {
-        //var stance = _context.Stances.FirstOrDefault(x => x.Id == stanceId);
-        //if (stance is null)
-        //{
-        //    return NotFound("Could not find a stance with this name");
-        //}
-        //_context.Stances.Remove(stance);
-        //_context.SaveChanges();
+        var transition = _context.Transitions.FirstOrDefault(x => x.Id == transitionId);
+        if (transition is null)
+        {
+            return NotFound("Could not find a stance with this name");
+        }
+        _context.Transitions.Remove(transition);
+        _context.SaveChanges();
 
-        //return Ok();
-        throw new NotImplementedException();
+        return Ok();
     }
 }

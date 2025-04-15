@@ -22,14 +22,13 @@ export class ApiserviceService {
     return this.httpClient.post(this.path + 'stances', JSON.stringify(name), { headers });
   }
 
-  edditStance(stanceId: string, newName: string) {
-    console.log(newName);
+  edditStance(id: string, newName: string) {
     const headers = new HttpHeaders().set('content-type', 'application/json');
-    return this.httpClient.put(`${this.path}stances/${encodeURIComponent(stanceId)}`, JSON.stringify(newName), { headers });
+    return this.httpClient.put(`${this.path}stances/${encodeURIComponent(id)}`, JSON.stringify(newName), { headers });
   }
 
-  deleteStance(stanceId: string) {
-    return this.httpClient.delete(`${this.path}stances/${encodeURIComponent(stanceId)}`);
+  deleteStance(id: string) {
+    return this.httpClient.delete(`${this.path}stances/${encodeURIComponent(id)}`);
   }
 
   getAllTransitions(): Observable<any> {
@@ -43,4 +42,13 @@ export class ApiserviceService {
     return this.httpClient.post(this.path + 'transitions', body, { headers });
   }
 
+  editTransition(id: string, name: string, stanceIds: string[]) {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    const body = { name, stanceIds };
+    return this.httpClient.put(`${this.path}transitions/${encodeURIComponent(id)}`, body, { headers });
+  }
+
+  deleteTransition(id: string) {
+    return this.httpClient.delete(`${this.path}transitions/${encodeURIComponent(id)}`);
+  }
 }
