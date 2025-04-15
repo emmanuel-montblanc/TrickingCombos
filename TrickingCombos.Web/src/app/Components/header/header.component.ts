@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { ThemeService } from '../../Services/theme.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    RouterLink
     // MatMenuModule,
     // TitleCasePipe
   ],
@@ -19,10 +21,15 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  @Output() toggleSidenav = new EventEmitter<void>();
   isDarkMode = false;
 
   constructor(public themeService: ThemeService) {
     this.isDarkMode = this.themeService.selectedTheme()?.name === 'dark';
+  }
+
+  onMenuClick() {
+    this.toggleSidenav.emit();
   }
 
   toggleTheme() {

@@ -1,5 +1,17 @@
 <mat-toolbar>
-    Tricking Combos Beta
+    <button mat-icon-button id="menu-button" (click)="onMenuClick()">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span>Tricking Combos Beta</span>
+
+    <div id="links-container">
+        <a mat-button routerLink="/stances">Stances</a>
+        <a mat-button routerLink="/variations">Variations</a>
+        <a mat-button routerLink="/transitions">Transitions</a>
+        <a mat-button routerLink="/tricks">Tricks</a>
+    </div>
+
     <mat-slide-toggle
         [checked]="themeService.selectedTheme()?.name === 'light'"
         (change)="toggleTheme()"

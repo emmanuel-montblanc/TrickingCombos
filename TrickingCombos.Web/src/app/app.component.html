@@ -1,2 +1,45 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
+<app-header (toggleSidenav)="onToggleSidenav()"></app-header>
+<mat-sidenav-container>
+
+    <mat-sidenav #sidenav mode="over">
+        <mat-nav-list>
+            <a mat-list-item class="nav-item" routerLink="/">
+              <mat-icon matListItemIcon>home</mat-icon>
+              <span>Accueil</span>
+            </a>
+        
+            <!-- Database Section -->
+            <mat-expansion-panel id="database-expension-panel" >
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <mat-icon>storage</mat-icon>
+                  <span>Database</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-nav-list>
+                <a mat-list-item class="nav-item" routerLink="/stances">
+                  <mat-icon matListItemIcon>directions_walk</mat-icon>
+                  <span>Stances</span>
+                </a>
+                <a mat-list-item class="nav-item" routerLink="/variations">
+                  <mat-icon matListItemIcon>shuffle</mat-icon>
+                  <span>Variations</span>
+                </a>
+                <a mat-list-item class="nav-item" routerLink="/transitions">
+                  <mat-icon matListItemIcon>swap_horiz</mat-icon>
+                  <span>Transitions</span>
+                </a>
+                <a mat-list-item class="nav-item" routerLink="/tricks">
+                  <mat-icon matListItemIcon>sports_martial_arts</mat-icon>
+                  <span>Tricks</span>
+                </a>
+              </mat-nav-list>
+            </mat-expansion-panel>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="content">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>

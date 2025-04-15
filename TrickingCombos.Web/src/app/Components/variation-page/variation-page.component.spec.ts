@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainpageComponent } from './mainpage.component';
+import { VariationPageComponent } from './variation-page.component';
 
-describe('MainpageComponent', () => {
-  let component: MainpageComponent;
-  let fixture: ComponentFixture<MainpageComponent>;
+describe('VariationPageComponent', () => {
+  let component: VariationPageComponent;
+  let fixture: ComponentFixture<VariationPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MainpageComponent]
+      imports: [VariationPageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MainpageComponent);
+    fixture = TestBed.createComponent(VariationPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

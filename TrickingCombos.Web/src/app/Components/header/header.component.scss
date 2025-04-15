@@ -3,5 +3,21 @@ mat-toolbar {
     justify-content: space-between;
     padding-inline: 1rem;
 
-    box-shadow: var(--mat-sys-level3) 
+    //box-shadow: var(--mat-sys-level3) 
+}
+
+@media (min-width: 800px) {
+    #menu-button {
+        display: none;
+    }
+
+    .mat-sidenav {
+        display: none;
+    }
+}
+
+@media (max-width: 800px) {
+    #links-container {
+        display: none;
+    }
 }

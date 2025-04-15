@@ -39,6 +39,13 @@ html {
     )
 }
 
+// mat-sidenav {
+//     @include mat.sidenav-overrides((
+//         container-background-color: var(--mat-sys-inverse-primary),
+//         container-text-color: var(--mat-sys-on-inverse-primary)
+//       ));
+// }
+
 mat-toolbar {
     @include mat.toolbar-overrides(
         (
@@ -55,4 +62,10 @@ mat-toolbar {
 }
 
 html, body { height: 100%; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+app-root {
+    height: 100%;
+    display: grid;
+}

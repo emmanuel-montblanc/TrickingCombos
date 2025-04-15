@@ -10,13 +10,13 @@ import { ApiserviceService } from '../../Services/apiservice.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: 'app-mainpage',
+  selector: 'app-stance-page',
   imports: [MatTableModule, MatButtonModule, MatIconModule],
-  templateUrl: './mainpage.component.html',
-  styleUrl: './mainpage.component.scss'
+  templateUrl: './stance-page.component.html',
+  styleUrl: './stance-page.component.scss'
 })
 
-export class MainpageComponent {
+export class StancePageComponent {
   displayedColumns: string[] = ['name', 'actions'];
   stances: Stance[] = [];
 
