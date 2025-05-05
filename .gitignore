@@ -44,3 +44,6 @@ Thumbs.db
 
 /TrickingCombos.API/obj
 /TrickingCombos.API/bin
+
+.env
+/TrickingCombos.API/appsettings.Development.json
