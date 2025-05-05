@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
-import { Stance } from '../../Models/stance';
+import { Stance } from '../../Models/Stance';
 
 @Component({
   selector: 'app-transition-dialog',
@@ -33,7 +33,6 @@ export class TransitionDialogComponent {
     public dialogRef: MatDialogRef<TransitionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(data);
     this.stances = data.stances;
     this.id = data.transition?.id || null;
 
@@ -50,7 +49,6 @@ export class TransitionDialogComponent {
       stancesIds: this.form.value.stances,
       id: this.id
     }
-    console.log(updatedTranstion);
     this.dialogRef.close(updatedTranstion);
   }
 

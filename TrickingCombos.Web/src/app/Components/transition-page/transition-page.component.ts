@@ -6,7 +6,7 @@ import { Transition } from '../../Models/Transition';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Stance } from '../../Models/stance';
+import { Stance } from '../../Models/Stance';
 import { TransitionDialogComponent } from '../transition-dialog/transition-dialog.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
@@ -56,8 +56,8 @@ export class TransitionPageComponent {
     });
   }
 
-  getStanceNames(element: any): string {
-    return element.stances?.map((s: any) => s.name).join(', ') || '';
+  getStanceNames(transition: Transition): string {
+    return transition.stances?.map((s: any) => s.name).join(', ') || '';
   }
 
   openDialog(data?: Transition): void {

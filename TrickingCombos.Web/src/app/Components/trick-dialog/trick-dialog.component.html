@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>{{ data ? 'Modification' : 'Ajout' }} d'un trick</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" style="width: 100%; margin-top: 1rem;">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Landing stance par défaut</mat-label>
+        <mat-select formControlName="defaultLandingStanceId">
+            <mat-option *ngFor="let stance of stances" [value]="stance.id">
+                {{ stance.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Faisable depuis</mat-label>
+        <mat-select formControlName="transitionIds" multiple>
+            <mat-option *ngFor="let transition of transitions" [value]="transition.id">
+                {{ transition.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Variations possibles</mat-label>
+        <mat-select formControlName="variationIds" multiple>
+            <mat-option *ngFor="let variation of variations" [value]="variation.id">
+                {{ variation.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+</form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Annuler</button>
+  <button mat-flat-button (click)="save()">{{ data ? 'Enregister' : 'Ajouter' }}</button>
+</mat-dialog-actions>

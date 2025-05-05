@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { Stance } from '../../Models/stance';
+import { Stance } from '../../Models/Stance';
 
 @Component({
   selector: 'app-stance-dialog',

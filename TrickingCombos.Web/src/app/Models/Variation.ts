@@ -1,4 +1,4 @@
-import { Stance } from "./stance";
+import { Stance } from "./Stance";
 
 export interface Variation {
     id: string;

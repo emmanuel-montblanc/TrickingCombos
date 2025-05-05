@@ -8,9 +8,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import { Stance } from '../../Models/Stance';
+import { Variation } from '../../Models/Variation';
+import { Transition } from '../../Models/Transition';
 
 @Component({
-  selector: 'app-variation-dialog',
+  selector: 'app-trick-dialog',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -20,37 +22,47 @@ import { Stance } from '../../Models/Stance';
     MatButtonModule,
     MatSelectModule
   ],
-  templateUrl: './variation-dialog.component.html',
-  styleUrl: './variation-dialog.component.scss'
+  templateUrl: './trick-dialog.component.html',
+  styleUrl: './trick-dialog.component.scss'
 })
 
-export class VariationDialogComponent {
+export class TrickDialogComponent {
   id: string | null;
   form: FormGroup;
   stances: Stance[] = [];
+  transitions: Transition[] = [];
+  variations: Variation[] = [];
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<VariationDialogComponent>,
+    public dialogRef: MatDialogRef<TrickDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.stances = data.stances;
-    this.id = data.variation?.id || null;
+    this.transitions = data.transitions;
+    this.variations = data.variations;
+    this.id = data.trick?.id || null;
+
+    const transitionIds = data.trick?.transitions?.map((t: Transition) => t.id) || [];
+    const variationIds = data.trick?.variations?.map((v: Variation) => v.id) || [];
 
     this.form = this.fb.group({
-      name: [data.variation?.name || ''],
-      landingStanceId: [data.variation?.landingStance.id || '' ] 
+      name: [data.trick?.name || ''],
+      defaultLandingStanceId: [data.trick?.defaultLandingStance.id || '' ],
+      transitionIds: [transitionIds],
+      variationIds: [variationIds]
     });
   }
 
   save() {
-    const updatedVariation = {
+    const updatedTrick = {
+      id: this.id,
       name: this.form.value.name,
-      landingStanceId: this.form.value.landingStanceId,
-      id: this.id
+      defaultLandingStanceId: this.form.value.defaultLandingStanceId,
+      transitionIds: this.form.value.transitionIds,
+      variationIds: this.form.value.variationIds
     }
-    console.log(updatedVariation);
-    this.dialogRef.close(updatedVariation);
+    this.dialogRef.close(updatedTrick);
   }
 
   cancel() {

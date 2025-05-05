@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Stance } from '../../Models/stance';
+import { Stance } from '../../Models/Stance';
 import { ApiserviceService } from '../../Services/apiservice.service';
 import { SnackbarService } from '../../Services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';

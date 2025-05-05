@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment';
-import { Stance } from '../Models/stance';
+import { Stance } from '../Models/Stance';
 
 @Injectable({
   providedIn: 'root'
@@ -74,5 +74,38 @@ export class ApiserviceService {
 
   deleteVariation(id: string) {
     return this.httpClient.delete(`${this.path}variations/${encodeURIComponent(id)}`);
+  }
+
+  // Tricks
+  getAllTricks(): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this.httpClient.get(this.path + 'tricks', { headers });
+  }
+
+  addTrick(name: string, defaultLandingstanceId: string, transitionIds: string[], variationIds: string[]) {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    const body = { 
+      name,
+      defaultLandingstanceId,
+      transitionIds,
+      variationIds
+    };
+    console.log(body);
+    return this.httpClient.post(this.path + 'tricks', body, { headers });
+  }
+
+  editTrick(id: string, name: string, defaultLandingstanceId: string, transitionIds: string[], variationIds: string[]) {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    const body = { 
+      name,
+      defaultLandingstanceId,
+      transitionIds,
+      variationIds
+    };
+    return this.httpClient.put(`${this.path}tricks/${encodeURIComponent(id)}`, body, { headers });
+  }
+
+  deleteTrick(id: string) {
+    return this.httpClient.delete(`${this.path}tricks/${encodeURIComponent(id)}`);
   }
 }
