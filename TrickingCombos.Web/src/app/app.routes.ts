@@ -4,9 +4,11 @@ import { VariationPageComponent } from './Components/variation-page/variation-pa
 import { TransitionPageComponent } from './Components/transition-page/transition-page.component';
 import { TrickPageComponent } from './Components/trick-page/trick-page.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
+import { LoginPageComponent } from './Components/login-page/login-page.component';
 
 export const routes: Routes = [
     { path: '', component: HomePageComponent },
+    { path: 'login', component: LoginPageComponent },
     { path: 'stances', component: StancePageComponent },
     { path: 'variations', component: VariationPageComponent },
     { path: 'transitions', component: TransitionPageComponent },

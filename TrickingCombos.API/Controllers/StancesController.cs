@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrickingCombos.API.Data;
 using TrickingCombos.API.Extensions;
@@ -21,6 +22,7 @@ public class StancesController(TricksDbContext context) : ControllerBase
         return Ok(stancesDtos);
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult AddStance([FromBody] string name)
     {

@@ -22,7 +22,6 @@ html {
     );
 }
 
-
 .warn {
     @include mat.theme(
         (
@@ -38,13 +37,6 @@ html {
         )
     )
 }
-
-// mat-sidenav {
-//     @include mat.sidenav-overrides((
-//         container-background-color: var(--mat-sys-inverse-primary),
-//         container-text-color: var(--mat-sys-on-inverse-primary)
-//       ));
-// }
 
 mat-toolbar {
     @include mat.toolbar-overrides(
@@ -70,3 +62,10 @@ app-root {
     display: grid;
     grid-template-rows: auto 1fr;
 }
+
+mat-card {
+    @include mat.card-overrides((
+      subtitle-text-color: var(--mat-sys-on-surface-variant),
+      outlined-container-color: var(--mat-sys-surface-variant)
+    ));
+  }
