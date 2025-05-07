@@ -73,7 +73,10 @@ public class UsersController : ControllerBase
 
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-        return Ok(new { token = tokenString });
+        return Ok(new {
+            token = tokenString,
+            username = user.UserName    
+        });
     }
 
     [Authorize(Roles = "Admin")]

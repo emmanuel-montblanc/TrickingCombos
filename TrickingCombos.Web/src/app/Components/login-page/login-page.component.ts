@@ -41,6 +41,9 @@ export class LoginPageComponent {
       password: ''
     });
     this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+
+    if (this.authService.isLoggedIn()) 
+      this.router.navigateByUrl(this.returnUrl);
   }
 
   hidePasswordClicked(event: MouseEvent) {
@@ -62,7 +65,7 @@ export class LoginPageComponent {
       },
       error: err => {
         console.error('Login failed', err);
-        this.form.value.password = '';
+        this.form.get('password')?.reset();
         this.loginHasFailed.set(true);
       }
     })

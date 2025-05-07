@@ -15,12 +15,23 @@
         <a mat-button routerLink="/tricks">Tricks</a>
     </div>
 
-    <mat-slide-toggle
-        [checked]="themeService.selectedTheme()?.name === 'light'"
-        (change)="toggleTheme()"
-    >
-        <button mat-icon-button (click)="toggleTheme()">
-            <mat-icon>{{ themeService.selectedTheme()?.icon }}</mat-icon>
-        </button>
-    </mat-slide-toggle>
-  </mat-toolbar>
+    <div style="display: flex; align-items: center; gap: 0.5rem">
+        <mat-slide-toggle [checked]="themeService.selectedTheme()?.name === 'light'" (change)="toggleTheme()">
+            <button mat-icon-button (click)="toggleTheme()">
+                <mat-icon>{{ themeService.selectedTheme()?.icon }}</mat-icon>
+            </button>
+        </mat-slide-toggle>
+
+        @if (!authService.isLoggedIn()) {
+            <a mat-button routerLink="/login">Se connecter</a>
+        } @else {
+            <button mat-button [matMenuTriggerFor]="menu">{{ authService.getUsername() }}</button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="authService.logout()">
+                    <span>Se déconnecter</span>
+                    <mat-icon>logout</mat-icon>
+                </button>
+            </mat-menu>
+        }
+    </div>
+</mat-toolbar>
