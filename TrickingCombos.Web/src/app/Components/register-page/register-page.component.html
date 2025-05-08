@@ -1,0 +1,58 @@
+<div class="content center">
+    <div style="display: grid; gap: 1rem; justify-items: center;">
+        <img src="images/logo.png" width="100" height="100">
+        <h2>Bienvenue sur TrickingCombos !</h2>
+    
+        <mat-card appearance="outlined">
+            <mat-card-content>
+                <form [formGroup]="form" >
+                    <mat-form-field appearance="outline" style="width: 100%; margin-top: 1rem;">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" />
+                        @if (form.get('email')?.hasError('emailTaken')) {
+                            <mat-error>Cet email est déjà utilisé.</mat-error>
+                          }
+                      </mat-form-field>
+
+                    <mat-form-field appearance="outline" style="width: 100%; margin-top: 1rem;">
+                      <mat-label>Nom d'utilisateur</mat-label>
+                      <input matInput formControlName="username" />
+                      @if (form.get('username')?.hasError('usernameTaken')) {
+                        <mat-error>Ce nom d'utilisateur est déjà utilisé.</mat-error>
+                      }
+                    </mat-form-field>
+                
+                    <mat-form-field appearance="outline" style="width: 100%; margin-top: 1rem;">
+                        <mat-label>Mot de passe</mat-label>
+                        <input matInput formControlName="password" [type]="hidePassword() ? 'password' : 'text'" />
+                        <button mat-icon-button matSuffix type="button" (click)="hidePasswordClicked($event)">
+                          <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        @if (form.get('password')?.hasError('passwordStrength')) {
+                            <mat-error>{{ getPasswordError() }}</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" style="width: 100%; margin-top: 1rem;">
+                        <mat-label>Confirmez votre mot de passe</mat-label>
+                        <input matInput formControlName="confirmPassword" [type]="hideConfirmPassword() ? 'password' : 'text'" />
+                        <button mat-icon-button matSuffix type="button" (click)="hideConfirmPasswordClicked($event)">
+                          <mat-icon>{{hideConfirmPassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        @if (form.get('confirmPassword')?.hasError('notSamePassword')) {
+                            <mat-error>Le mot de passe ne correspond pas</mat-error>
+                        }
+                    </mat-form-field>
+                  <button mat-flat-button style="width: 100%" [disabled]="form.invalid || form.pending"  (click)="register()">Créer mon compte</button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+          
+        <mat-card appearance="outlined" style="width: 100%">
+            <mat-card-content style="display: grid; justify-items: center;">
+                <span>Vous avez déjà un compte ?</span>
+                <a href="/login">Connectez vous</a>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

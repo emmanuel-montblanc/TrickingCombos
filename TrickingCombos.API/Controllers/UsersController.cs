@@ -36,7 +36,12 @@ public class UsersController : ControllerBase
         if (!result.Succeeded)
             return BadRequest(result.Errors);
 
-        return Ok("User registered");
+        string tokenString = await GenerateTokenAsync(user);
+        return Ok(new
+        {
+            token = tokenString,
+            username = user.UserName
+        });
     }
 
     [HttpPost("login")]
@@ -48,6 +53,48 @@ public class UsersController : ControllerBase
         var validPassword = await _userManager.CheckPasswordAsync(user, request.Password);
         if (!validPassword) return Unauthorized();
 
+        string tokenString = await GenerateTokenAsync(user);
+        return Ok(new {
+            token = tokenString,
+            username = user.UserName    
+        });
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+            return NotFound($"User with ID '{id}' not found.");
+
+        var result = await _userManager.DeleteAsync(user);
+        if (!result.Succeeded)
+            return BadRequest(result.Errors);
+
+        return Ok($"User '{user.UserName}' deleted.");
+    }
+
+    [HttpGet("check-email")]
+    public async Task<IActionResult> CheckEmail([FromQuery] string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        bool available = user == null;
+
+        return Ok(new { available });
+    }
+
+    [HttpGet("check-username")]
+    public async Task<IActionResult> CheckUsername([FromQuery] string username)
+    {
+        var user = await _userManager.FindByNameAsync(username);
+        bool available = user == null;
+
+        return Ok(new { available });
+    }
+
+    private async Task<string> GenerateTokenAsync(ApplicationUser user)
+    {
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id),
@@ -71,26 +118,6 @@ public class UsersController : ControllerBase
             signingCredentials: creds
         );
 
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-        return Ok(new {
-            token = tokenString,
-            username = user.UserName    
-        });
-    }
-
-    [Authorize(Roles = "Admin")]
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(string id)
-    {
-        var user = await _userManager.FindByIdAsync(id);
-        if (user == null)
-            return NotFound($"User with ID '{id}' not found.");
-
-        var result = await _userManager.DeleteAsync(user);
-        if (!result.Succeeded)
-            return BadRequest(result.Errors);
-
-        return Ok($"User '{user.UserName}' deleted.");
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

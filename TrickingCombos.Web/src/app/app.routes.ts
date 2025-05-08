@@ -5,10 +5,12 @@ import { TransitionPageComponent } from './Components/transition-page/transition
 import { TrickPageComponent } from './Components/trick-page/trick-page.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
 import { LoginPageComponent } from './Components/login-page/login-page.component';
+import { RegisterPageComponent } from './Components/register-page/register-page.component';
 
 export const routes: Routes = [
     { path: '', component: HomePageComponent },
     { path: 'login', component: LoginPageComponent },
+    { path: 'register', component: RegisterPageComponent },
     { path: 'stances', component: StancePageComponent },
     { path: 'variations', component: VariationPageComponent },
     { path: 'transitions', component: TransitionPageComponent },
