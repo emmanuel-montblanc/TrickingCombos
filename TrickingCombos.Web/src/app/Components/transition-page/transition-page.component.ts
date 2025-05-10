@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Stance } from '../../Models/Stance';
 import { TransitionDialogComponent } from '../transition-dialog/transition-dialog.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-transition-page',
@@ -17,15 +18,20 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrl: './transition-page.component.scss'
 })
 export class TransitionPageComponent {
-  displayedColumns: string[] = ['name', 'stances', 'actions'];
+  displayedColumns: string[] = ['name', 'stances'];
   stances: Stance[] = [];
   transitions: Transition[] = [];
 
   constructor(
     private service: ApiserviceService,
+    public authService: AuthService,
     private snackbar: SnackbarService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    if (authService.isAdmin()) {
+      this.displayedColumns.push('actions');
+    }
+  }
 
   ngOnInit() {
     this.getAllTransitions();

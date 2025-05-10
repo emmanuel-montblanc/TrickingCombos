@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrickingCombos.API.Data;
@@ -22,6 +23,7 @@ public class VariationsController(TricksDbContext context) : ControllerBase
         return Ok(variationsDtos);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult AddTransition([FromBody] VariationRequest variationRequest)
     {
@@ -50,6 +52,7 @@ public class VariationsController(TricksDbContext context) : ControllerBase
         return Ok(variation.ToDto());
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{variationId}")]
     public IActionResult EditVariation([FromRoute] Guid variationId, [FromBody] VariationRequest variationRequest)
     {
@@ -78,6 +81,7 @@ public class VariationsController(TricksDbContext context) : ControllerBase
         return Ok(variation.ToDto());
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{variationId}")]
     public IActionResult DeleteVariation([FromRoute] Guid variationId)
     {

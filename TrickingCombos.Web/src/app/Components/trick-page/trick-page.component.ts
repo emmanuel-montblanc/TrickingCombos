@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { TrickDialogComponent } from '../trick-dialog/trick-dialog.component';
+import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-trick-page',
@@ -20,7 +21,7 @@ import { TrickDialogComponent } from '../trick-dialog/trick-dialog.component';
 })
 
 export class TrickPageComponent {
-  displayedColumns: string[] = ['name', 'defaultLandingStance', 'transitions', 'variations', 'actions'];
+  displayedColumns: string[] = ['name', 'defaultLandingStance', 'transitions', 'variations'];
   tricks: Trick[] = [];
   stances: Stance[] = [];
   transitions: Transition[] = [];
@@ -28,9 +29,14 @@ export class TrickPageComponent {
 
   constructor(
     private service: ApiserviceService,
+    public authService: AuthService,
     private snackbar: SnackbarService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    if (authService.isAdmin()) {
+      this.displayedColumns.push('actions');
+    }
+  }
 
   ngOnInit() {
     this.getAllTricks();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrickingCombos.API.Data;
@@ -22,6 +23,7 @@ public class TransitionsController(TricksDbContext context) : ControllerBase
         return Ok(stancesDtos);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult AddTransition([FromBody] TransitionRequest transitionRequest)
     {
@@ -57,6 +59,7 @@ public class TransitionsController(TricksDbContext context) : ControllerBase
         return Ok(transition.ToDto());
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{transitionId}")]
     public IActionResult EditTransition([FromRoute] Guid transitionId, [FromBody] TransitionRequest transitionRequest)
     {
@@ -80,6 +83,7 @@ public class TransitionsController(TricksDbContext context) : ControllerBase
         return Ok(transition.ToDto());
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{transitionId}")]
     public IActionResult DeleteStance([FromRoute] Guid transitionId)
     {

@@ -62,6 +62,8 @@ export class LoginPageComponent {
     this.authService.login(this.form.value.username, this.form.value.password).subscribe({
       next: () => {
         this.router.navigateByUrl(this.returnUrl);
+
+        console.log(this.authService.isAdmin());
       },
       error: err => {
         console.error('Login failed', err);

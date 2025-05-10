@@ -9,6 +9,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-variation-page',
@@ -17,15 +18,20 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './variation-page.component.scss'
 })
 export class VariationPageComponent {
-  displayedColumns: string[] = ['name', 'stances', 'actions'];
+  displayedColumns: string[] = ['name', 'stances'];
   stances: Stance[] = [];
   variations: Variation[] = [];
 
   constructor(
     private service: ApiserviceService,
+    public authService: AuthService,
     private snackbar: SnackbarService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    if (authService.isAdmin()) {
+      this.displayedColumns.push('actions');
+    }
+  }
 
   ngOnInit() {
     this.getAllVariations();

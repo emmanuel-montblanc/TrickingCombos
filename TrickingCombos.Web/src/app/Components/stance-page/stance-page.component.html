@@ -25,8 +25,10 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <button mat-fab extended (click)="openDialog()">
-        <mat-icon>add</mat-icon>
-        Ajouter une nouvelle stance
-    </button>
+    @if (authService.isAdmin()) {
+        <button mat-fab extended (click)="openDialog()">
+            <mat-icon>add</mat-icon>
+            Ajouter une nouvelle stance
+        </button>
+    }
 </div>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrickingCombos.API.Data;
 using TrickingCombos.API.Extensions;
@@ -24,6 +25,7 @@ public class TricksController(TricksDbContext context) : ControllerBase
         return Ok(tricksDtos);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult AddTricks([FromBody] TricksRequest tricksRequest)
     {
@@ -77,6 +79,7 @@ public class TricksController(TricksDbContext context) : ControllerBase
         return Ok(trick.ToDto());
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{trickId}")]
     public IActionResult EditTrick([FromRoute] Guid trickId, [FromBody] TricksRequest tricksRequest)
     {
@@ -137,6 +140,7 @@ public class TricksController(TricksDbContext context) : ControllerBase
         return Ok(trick.ToDto());
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{trickId}")]
     public IActionResult DeleteStance([FromRoute] Guid trickId)
     {

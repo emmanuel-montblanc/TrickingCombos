@@ -22,7 +22,7 @@ public class StancesController(TricksDbContext context) : ControllerBase
         return Ok(stancesDtos);
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult AddStance([FromBody] string name)
     {
@@ -37,6 +37,7 @@ public class StancesController(TricksDbContext context) : ControllerBase
         return Ok(stance.ToDto());
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{stanceId}")]
     public IActionResult EditStance([FromRoute] Guid stanceId, [FromBody] string newName)
     {
@@ -50,8 +51,9 @@ public class StancesController(TricksDbContext context) : ControllerBase
         _context.SaveChanges();
 
         return Ok(stance.ToDto());
-    } 
+    }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{StanceId}")]
     public IActionResult DeleteStance([FromRoute] Guid stanceId)
     {

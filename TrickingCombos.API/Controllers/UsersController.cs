@@ -37,11 +37,7 @@ public class UsersController : ControllerBase
             return BadRequest(result.Errors);
 
         string tokenString = await GenerateTokenAsync(user);
-        return Ok(new
-        {
-            token = tokenString,
-            username = user.UserName
-        });
+        return Ok(new { token = tokenString });
     }
 
     [HttpPost("login")]
@@ -54,10 +50,7 @@ public class UsersController : ControllerBase
         if (!validPassword) return Unauthorized();
 
         string tokenString = await GenerateTokenAsync(user);
-        return Ok(new {
-            token = tokenString,
-            username = user.UserName    
-        });
+        return Ok(new { token = tokenString });
     }
 
     [Authorize(Roles = "Admin")]

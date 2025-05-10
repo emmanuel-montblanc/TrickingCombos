@@ -8,6 +8,7 @@ import { StanceDialogComponent } from '../stance-dialog/stance-dialog.component'
 import { SnackbarService } from '../../Services/snackbar.service';
 import { ApiserviceService } from '../../Services/apiservice.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-stance-page',
@@ -17,14 +18,19 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 })
 
 export class StancePageComponent {
-  displayedColumns: string[] = ['name', 'actions'];
+  displayedColumns: string[] = ['name'];
   stances: Stance[] = [];
 
   constructor(
     private service: ApiserviceService,
+    public authService: AuthService,
     private snackbar: SnackbarService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    if (authService.isAdmin()) {
+      this.displayedColumns.push('actions');
+    }
+  }
 
   ngOnInit() {
     this.getAllStances();
