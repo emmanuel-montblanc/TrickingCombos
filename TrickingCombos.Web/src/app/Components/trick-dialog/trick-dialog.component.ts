@@ -55,6 +55,8 @@ export class TrickDialogComponent {
   }
 
   save() {
+    console.log(this.form.value);
+
     const updatedTrick = {
       id: this.id,
       name: this.form.value.name,

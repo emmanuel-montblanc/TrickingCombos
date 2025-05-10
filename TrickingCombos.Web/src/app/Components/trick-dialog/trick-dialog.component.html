@@ -26,7 +26,7 @@
 
     <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>Variations possibles</mat-label>
-        <mat-select formControlName="variationsId" multiple>
+        <mat-select formControlName="variationIds" multiple>
             <mat-option *ngFor="let variation of variations" [value]="variation.id">
                 {{ variation.name }}
             </mat-option>

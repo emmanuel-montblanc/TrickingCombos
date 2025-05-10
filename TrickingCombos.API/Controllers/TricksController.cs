@@ -142,9 +142,12 @@ public class TricksController(TricksDbContext context) : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpDelete("{trickId}")]
-    public IActionResult DeleteStance([FromRoute] Guid trickId)
+    public IActionResult DeleteTrick([FromRoute] Guid trickId)
     {
-        var trick = _context.Tricks.FirstOrDefault(x => x.Id == trickId);
+        var trick = _context.Tricks
+            .Include(t => t.Variations)
+            .Include(t => t.Transitions)
+            .FirstOrDefault(x => x.Id == trickId);
         if (trick is null)
         {
             return NotFound("Could not find a trick with this name");
