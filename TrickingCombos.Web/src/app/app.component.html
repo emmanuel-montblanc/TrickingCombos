@@ -8,6 +8,13 @@
               <span>Accueil</span>
             </a>
         
+            @if (authService.isAdmin()) {
+              <a mat-list-item class="nav-item" routerLink="/admin">
+                <mat-icon matListItemIcon>manage_accounts</mat-icon>
+                <span>Admin</span>
+              </a>
+            }
+
             <!-- Database Section -->
             <mat-expansion-panel id="database-expension-panel" >
               <mat-expansion-panel-header>

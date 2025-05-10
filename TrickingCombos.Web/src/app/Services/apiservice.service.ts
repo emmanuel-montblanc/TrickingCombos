@@ -12,6 +12,16 @@ export class ApiserviceService {
 
   constructor(private httpClient: HttpClient) { }
 
+  // Users
+  getAllUsers(): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this.httpClient.get(this.path + 'users', { headers });
+  }
+
+  deleteUser(id: string) {
+    return this.httpClient.delete(`${this.path}users/${encodeURIComponent(id)}`);
+  }
+
   // Stances
   getAllStances(): Observable<any> {
     const headers = new HttpHeaders().set('content-type', 'application/json');

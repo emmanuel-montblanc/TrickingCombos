@@ -9,6 +9,9 @@
     </div>
 
     <div id="links-container">
+        @if (authService.isAdmin()) {
+            <a mat-button routerLink="/admin">Admin</a>
+        }
         <a mat-button routerLink="/stances">Stances</a>
         <a mat-button routerLink="/variations">Variations</a>
         <a mat-button routerLink="/transitions">Transitions</a>

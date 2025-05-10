@@ -5,6 +5,7 @@ import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { AuthService } from './Services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,8 @@ export class AppComponent {
   title = 'TrickingCombos.Web';
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
+  constructor(public authService: AuthService) {}
+  
   onToggleSidenav() {
     this.sidenav.toggle();
   }

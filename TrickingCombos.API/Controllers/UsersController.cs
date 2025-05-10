@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TrickingCombos.API.Extensions;
 using TrickingCombos.API.Models;
 
 namespace TrickingCombos.API.Controllers;
@@ -25,6 +26,18 @@ public class UsersController : ControllerBase
     {
         _userManager = userManager;
         _configuration = configuration;
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet]
+    public IActionResult GetUsers()
+    {
+        var users = _userManager.Users;
+        var usersDTOs = users.
+            Select(user => user.ToDto(_userManager))
+            .Select(task => task.Result);
+
+        return Ok(usersDTOs);
     }
 
     [HttpPost("register")]
@@ -55,7 +68,7 @@ public class UsersController : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(string id)
+    public async Task<IActionResult> DeleteUser([FromRoute] string id)
     {
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
@@ -65,7 +78,7 @@ public class UsersController : ControllerBase
         if (!result.Succeeded)
             return BadRequest(result.Errors);
 
-        return Ok($"User '{user.UserName}' deleted.");
+        return NoContent();
     }
 
     [HttpGet("check-email")]
